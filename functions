@@ -1,0 +1,472 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled10.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyMPTGsbcY3wmugQ2E75c4+n",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/meghasyam/python/blob/master/functions\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "e8ZsWr__XwOE",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 225
+        },
+        "outputId": "44cc75e0-8a33-496a-a075-5b57bfcd2d3a"
+      },
+      "source": [
+        ">>> def f(x):\n",
+        "...     return x\n",
+        "...  \n",
+        ">>> function_attrs = set(dir(f))\n",
+        ">>> object_attrs = set(dir(object))\n",
+        ">>> function_attrs -= object_attrs\n",
+        ">>> from pprint import pprint\n",
+        ">>> pprint(sorted(function_attrs))"
+      ],
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "['__annotations__',\n",
+            " '__call__',\n",
+            " '__closure__',\n",
+            " '__code__',\n",
+            " '__defaults__',\n",
+            " '__dict__',\n",
+            " '__get__',\n",
+            " '__globals__',\n",
+            " '__kwdefaults__',\n",
+            " '__module__',\n",
+            " '__name__',\n",
+            " '__qualname__']\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "zP_ArBp4YRiH",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 52
+        },
+        "outputId": "1d6f8b9b-2372-4e77-9aed-46776b911a79"
+      },
+      "source": [
+        ">>> def f1(x):\n",
+        "...    print(\"f1({}) called\".format(x))\n",
+        "...    return x\n",
+        "...\n",
+        ">>> f1.__call__(23)"
+      ],
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "f1(23) called\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "23"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 2
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "EpTlPi-9Yf6Z",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 52
+        },
+        "outputId": "14668c04-6a4a-414f-b00e-39921021ad42"
+      },
+      "source": [
+        ">>> class Func:\n",
+        "...     def __call__(self, arg):\n",
+        "...         print(\"%r(%r) called\" % (self, arg))\n",
+        "...         return arg\n",
+        "... \n",
+        ">>> f2 = Func()\n",
+        "# >>> f2\n",
+        "f2(\"ddd\")"
+      ],
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "<__main__.Func object at 0x7f3f5552e2e8>('ddd') called\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'ddd'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 6
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "RUnArDfSZ4op",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 69
+        },
+        "outputId": "c5156031-b88a-47b8-87ea-9b15c5a86fa8"
+      },
+      "source": [
+        ">>> def compose(g, h):\n",
+        "...     def anon(x):\n",
+        "...         return g(h(x))\n",
+        "...     return anon\n",
+        "... \n",
+        ">>> f3 = compose(f1, f2)\n",
+        ">>> f3(\"Shillalegh\")"
+      ],
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "<__main__.Func object at 0x7f3f5552e2e8>('Shillalegh') called\n",
+            "f1(Shillalegh) called\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'Shillalegh'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 7
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "_6alVuqBaQAs",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "outputId": "bb4a9269-cfac-46d6-fb87-94aff56c79b4"
+      },
+      "source": [
+        "%%writefile composable.py\n",
+        "\n",
+        "\"\"\"\n",
+        "composable.py: defines a composable function class.\n",
+        "\"\"\"\n",
+        "class Composable:\n",
+        "    def __init__(self, f):\n",
+        "        \"Store reference to proxied function.\"\n",
+        "        self.func = f\n",
+        "    def __call__(self, *args, **kwargs):\n",
+        "        \"Proxy the function, passing all arguments through.\"\n",
+        "        return self.func(*args, **kwargs)\n",
+        "    def __mul__(self, other):\n",
+        "        \"Return the composition of proxied and another function.\"\n",
+        "        if type(other) is Composable:\n",
+        "            def anon(x):\n",
+        "                return self.func(other.func(x))\n",
+        "            return Composable(anon)\n",
+        "        raise TypeError(\"Illegal operands for multiplication\")\n",
+        "    def __repr__(self):\n",
+        "        return \"<Composable function {0} at 0x{1:X}>\".format(\n",
+        "                            self.func.__name__, id(self))"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Overwriting composable.py\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "JoFYOVTaaWkt",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "outputId": "f4209221-4e16-4034-cab9-870046858b33"
+      },
+      "source": [
+        "%%writefile test_composable.py\n",
+        "\n",
+        "\"\"\"\n",
+        "test_composable.py\" performs simple tests of composable functions.\n",
+        "\"\"\"\n",
+        "import unittest\n",
+        "from composable import Composable\n",
+        "\n",
+        "def reverse(s):\n",
+        "    \"Reverses a string using negative-stride sequencing.\"\n",
+        "    return s[::-1]\n",
+        "\n",
+        "def square(x):\n",
+        "    \"Multiplies a number by itself.\"\n",
+        "    return x*x\n",
+        "\n",
+        "class ComposableTestCase(unittest.TestCase):\n",
+        "\n",
+        "    def test_inverse(self):\n",
+        "        reverser = Composable(reverse)\n",
+        "        nulltran = reverser * reverser\n",
+        "        for s in \"\", \"a\", \"0123456789\", \"abcdefghijklmnopqrstuvwxyz\":\n",
+        "            self.assertEquals(nulltran(s), s)\n",
+        "    \n",
+        "    def test_square(self):\n",
+        "        squarer = Composable(square)\n",
+        "        po4 = squarer * squarer\n",
+        "        for v, r in ((1, 1), (2, 16), (3, 81)):\n",
+        "            self.assertEqual(po4(v), r)\n",
+        "            \n",
+        "    def test_exceptions(self):\n",
+        "        fc = Composable(square)\n",
+        "        with self.assertRaises(TypeError):\n",
+        "            fc = fc * 3\n",
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "    unittest.main()"
+      ],
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Overwriting test_composable.py\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "CFpuI12Yam4F",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 104
+        },
+        "outputId": "6442b168-59b5-43ef-c7f2-f6083f5bf42a"
+      },
+      "source": [
+        "!python3 test_composable.py"
+      ],
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "...\n",
+            "----------------------------------------------------------------------\n",
+            "Ran 3 tests in 0.000s\n",
+            "\n",
+            "OK\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "4T_mA-cebJ1X",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "outputId": "b13437aa-87b2-4f41-ec31-e0eff5f020a9"
+      },
+      "source": [
+        "f = lambda x,y : x+y\n",
+        "f(2,3)"
+      ],
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "5"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 18
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "pxeaJRBgbdDD",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 52
+        },
+        "outputId": "87269334-7ef1-4454-9f75-3e2b6a5bfba8"
+      },
+      "source": [
+        ">>> def compose(g, h):\n",
+        "...     def anon(x):\n",
+        "...         return g(h(x))\n",
+        "...     return anon\n",
+        "... \n",
+        ">>> \n",
+        ">>> add1 = lambda x: x+1\n",
+        ">>> add1\n",
+        ">>> sqr = lambda x: x*x\n",
+        ">>> sqp1 = compose(sqr, add1)\n",
+        ">>> print(sqp1(5))\n",
+        ">>> type(add1)"
+      ],
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "36\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "function"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 20
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "PwYHUskqbwP8",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 104
+        },
+        "outputId": "69e5d5b5-ec22-4578-d5d3-ec7625ef5108"
+      },
+      "source": [
+        ">>> def f1(x):\n",
+        "...    print(\"f1({}) called\".format(x))\n",
+        "...    return x\n",
+        "...\n",
+        ">>> class Func:\n",
+        "...     def __call__(self, arg):\n",
+        "...         print(\"%r(%r) called\" % (self, arg))\n",
+        "...         return arg\n",
+        "... \n",
+        ">>> f2 = Func()\n",
+        ">>> ff = lambda f, g: lambda x: f(g(x))\n",
+        ">>> lam = ff(f1, f2)\n",
+        ">>> lam(\"Ebenezer\")\n",
+        ">>>\n",
+        ">>> ff = lambda f, g: (lambda x:\n",
+        "...                         f(g(x)))\n",
+        ">>> lam = ff(f1, f2)\n",
+        ">>> lam(\"Ebenezer\")"
+      ],
+      "execution_count": 22,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "<__main__.Func object at 0x7f3f554404a8>('Ebenezer') called\n",
+            "f1(Ebenezer) called\n",
+            "<__main__.Func object at 0x7f3f554404a8>('Ebenezer') called\n",
+            "f1(Ebenezer) called\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'Ebenezer'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 22
+        }
+      ]
+    }
+  ]
+}
